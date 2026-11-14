@@ -83,6 +83,14 @@ add_our_executable(
     ${LINK_WITH}
     )
 
+add_our_executable(
+    test_compressed_formats
+    LIBS
+    ${LINK_WITH}
+    )
+
+add_dependencies(test_compressed_formats copy_example_data)
+
 #-----------------------------------------------------------------------------#
 #
 #   Commands
@@ -92,6 +100,12 @@ add_our_executable(
 add_custom_target(run_standalone_tests
     DEPENDS test_list
     COMMAND test_list
+    )
+
+add_custom_target(run_tests_compressed
+    DEPENDS test_compressed_formats
+    COMMAND test_compressed_formats
+        ${CMAKE_CURRENT_SOURCE_DIR}/../examples/data
     )
 
 add_custom_target(run_tests

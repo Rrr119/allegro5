@@ -200,6 +200,20 @@ ALLEGRO_BITMAP *al_create_bitmap(int w, int h)
    return bitmap;
 }
 
+bool _al_upload_compressed_bitmap(ALLEGRO_BITMAP *bitmap, int levels,
+   const void *data, const size_t *level_sizes)
+{
+   if (!bitmap || bitmap->parent || levels < 1 || !data || !level_sizes)
+      return false;
+   if (!_al_pixel_format_is_compressed(al_get_bitmap_format(bitmap)))
+      return false;
+   if (!bitmap->vt || !bitmap->vt->upload_compressed_bitmap)
+      return false;
+
+   return bitmap->vt->upload_compressed_bitmap(bitmap, levels, data,
+      level_sizes);
+}
+
 
 /* Function: al_destroy_bitmap
  */

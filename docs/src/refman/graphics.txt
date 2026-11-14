@@ -286,7 +286,8 @@ is typically impossible to create compressed memory bitmaps.
 * ALLEGRO_PIXEL_FORMAT_COMPRESSED_RGBA_DXT1 -
     Compressed using the DXT1 compression algorithm. Each 4x4 pixel block is
     encoded in 64 bits (8 bytes), resulting in 6-8x compression ratio. Only a single bit
-    of alpha per pixel is supported.  Since 5.1.9.
+    of alpha per pixel is supported. This is the same format as
+    `ALLEGRO_PIXEL_FORMAT_COMPRESSED_RGBA_BC1`. Since 5.1.9.
 * ALLEGRO_PIXEL_FORMAT_COMPRESSED_RGBA_DXT3 -
     Compressed using the DXT3 compression algorithm. Each 4x4 pixel block is
     encoded in 128 bits (16 bytes), resulting in 4x compression ratio. This format
@@ -294,7 +295,34 @@ is typically impossible to create compressed memory bitmaps.
 * ALLEGRO_PIXEL_FORMAT_COMPRESSED_RGBA_DXT5 -
     Compressed using the DXT5 compression algorithm. Each 4x4 pixel block is
     encoded in 128 bits (16 bytes), resulting in 4x compression ratio. This format
-    supports smooth alpha transitions.  Since 5.1.9.
+    supports smooth alpha transitions. This is the same format as
+    `ALLEGRO_PIXEL_FORMAT_COMPRESSED_RGBA_BC3`. Since 5.1.9.
+* ALLEGRO_PIXEL_FORMAT_COMPRESSED_RGBA_BC7 -
+    Compressed using the BPTC/BC7 compression algorithm. Each 4x4 pixel block
+    is encoded in 128 bits (16 bytes) and supports high quality RGBA data.
+* `ALLEGRO_PIXEL_FORMAT_COMPRESSED_RGBA_ASTC_4x4`,
+  `ALLEGRO_PIXEL_FORMAT_COMPRESSED_RGBA_ASTC_5x4`,
+  `ALLEGRO_PIXEL_FORMAT_COMPRESSED_RGBA_ASTC_5x5`,
+  `ALLEGRO_PIXEL_FORMAT_COMPRESSED_RGBA_ASTC_6x5`,
+  `ALLEGRO_PIXEL_FORMAT_COMPRESSED_RGBA_ASTC_6x6`,
+  `ALLEGRO_PIXEL_FORMAT_COMPRESSED_RGBA_ASTC_8x5`,
+  `ALLEGRO_PIXEL_FORMAT_COMPRESSED_RGBA_ASTC_8x6`,
+  `ALLEGRO_PIXEL_FORMAT_COMPRESSED_RGBA_ASTC_8x8`,
+  `ALLEGRO_PIXEL_FORMAT_COMPRESSED_RGBA_ASTC_10x5`,
+  `ALLEGRO_PIXEL_FORMAT_COMPRESSED_RGBA_ASTC_10x6`,
+  `ALLEGRO_PIXEL_FORMAT_COMPRESSED_RGBA_ASTC_10x8`,
+  `ALLEGRO_PIXEL_FORMAT_COMPRESSED_RGBA_ASTC_10x10`,
+  `ALLEGRO_PIXEL_FORMAT_COMPRESSED_RGBA_ASTC_12x10`,
+  `ALLEGRO_PIXEL_FORMAT_COMPRESSED_RGBA_ASTC_12x12` -
+    ASTC compressed textures. Every block is encoded in 128 bits (16 bytes);
+    the suffix gives the block dimensions in pixels. The block dimensions are
+    available with [al_get_pixel_block_width] and
+    [al_get_pixel_block_height].
+
+`ALLEGRO_PIXEL_FORMAT_COMPRESSED_RGBA_BC1` and
+`ALLEGRO_PIXEL_FORMAT_COMPRESSED_RGBA_BC3` are aliases for the DXT1 and DXT5
+formats respectively. The BC2/DXT3 format remains available as
+`ALLEGRO_PIXEL_FORMAT_COMPRESSED_RGBA_DXT3`.
 
 See also: [al_set_new_bitmap_format], [al_get_bitmap_format]
 

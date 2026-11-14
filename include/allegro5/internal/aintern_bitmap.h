@@ -154,6 +154,10 @@ struct ALLEGRO_BITMAP_INTERFACE
 
    /* Back up texture to system RAM */
    void (*backup_dirty_bitmap)(ALLEGRO_BITMAP *bitmap);
+
+   /* Upload a complete compressed mipmap chain without decompressing it. */
+   bool (*upload_compressed_bitmap)(ALLEGRO_BITMAP *bitmap, int levels,
+      const void *data, const size_t *level_sizes);
 };
 
 ALLEGRO_BITMAP *_al_create_bitmap_params(ALLEGRO_DISPLAY *current_display,
@@ -192,6 +196,8 @@ void _al_put_pixel(ALLEGRO_BITMAP *bitmap, int x, int y, ALLEGRO_COLOR color);
 /* Bitmap I/O */
 void _al_init_iio_table(void);
 
+bool _al_upload_compressed_bitmap(ALLEGRO_BITMAP *bitmap, int levels,
+   const void *data, const size_t *level_sizes);
 
 int _al_get_bitmap_memory_format(ALLEGRO_BITMAP *bitmap);
 

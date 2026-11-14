@@ -17,17 +17,35 @@ Initializes the image addon.  This registers bitmap format handlers for
 [al_load_bitmap], [al_load_bitmap_f], [al_save_bitmap], [al_save_bitmap_f].
 
 The following types are built into the Allegro image addon and guaranteed to be
-available: BMP, DDS, PCX, TGA. Every platform also supports JPEG and PNG
+available: BMP, DDS, KTX, KTX2, PCX, TGA. Every platform also supports JPEG and PNG
 via external dependencies.
 
 Other formats may be available depending on the operating system and
 installed libraries, but are not guaranteed and should not be assumed to
 be universally available.
 
-The DDS format is only supported to load from, and only if the DDS file
-contains textures compressed in the DXT1, DXT3 and DXT5 formats. Note that when
-loading a DDS file, the created bitmap will always be a video bitmap and will
-have the pixel format matching the format in the file.
+DDS and KTX files are supported for loading block-compressed textures. The
+supported formats are:
+
+* BC1 (DXT1 / `ALLEGRO_PIXEL_FORMAT_COMPRESSED_RGBA_BC1`)
+* BC3 (DXT5 / `ALLEGRO_PIXEL_FORMAT_COMPRESSED_RGBA_BC3`)
+* BC7 (`ALLEGRO_PIXEL_FORMAT_COMPRESSED_RGBA_BC7`)
+* LDR ASTC with all 2D block sizes from 4x4 through 12x12
+
+DDS supports legacy DXT1/DXT3/DXT5 FourCC headers as well as BC1, BC3, BC7 and
+ASTC stored in a DX10 extended header. KTX 1 and KTX 2 are both supported;
+supercompressed KTX 2 files (for example Basis Universal) are not. Only
+single-layer 2D textures are accepted. Linear and sRGB format identifiers are
+accepted; no color-space conversion is performed when loading.
+
+The complete mipmap chain from the file is uploaded level by level with
+`glCompressedTexImage2D`. The compressed blocks are never decompressed on the
+CPU. If a file has no mipmaps but `ALLEGRO_MIPMAP` is requested, the GPU
+generates them after the base level is uploaded.
+
+When loading one of these files, the created bitmap is always a video bitmap
+and has the compressed pixel format matching the file. Loading fails if the
+current graphics device does not support the required compression format.
 
 ## API: al_is_image_addon_initialized
 

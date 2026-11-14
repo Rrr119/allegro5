@@ -1,0 +1,17 @@
+{
+  "root": "/home/dev/feedback/uid18030",
+  "B": "/home/dev/feedback/uid18030",
+  "sha": "f5f187830ba8d2eb0b84bace9d19da74e9b3d05d",
+  "wslDistro": "Ubuntu-26.04",
+  "source": {
+    "owner": "liballeg",
+    "repo": "allegro5",
+    "sha": "f5f187830ba8d2eb0b84bace9d19da74e9b3d05d"
+  },
+  "fork": {
+    "owner": "Rrr119",
+    "repo": "allegro5",
+    "cloneUrl": "https://github.com/Rrr119/allegro5.git"
+  },
+  "at": "2026-11-14T15:55:35.550Z"
+}

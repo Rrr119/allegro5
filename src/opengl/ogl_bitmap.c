@@ -36,6 +36,41 @@
 
 ALLEGRO_DEBUG_CHANNEL("opengl")
 
+#ifndef GL_TEXTURE_MAX_LEVEL
+#define GL_TEXTURE_MAX_LEVEL 0x813D
+#endif
+#ifndef GL_COMPRESSED_RGB_S3TC_DXT1_EXT
+#define GL_COMPRESSED_RGB_S3TC_DXT1_EXT 0x83F0
+#endif
+#ifndef GL_COMPRESSED_RGBA_S3TC_DXT1_EXT
+#define GL_COMPRESSED_RGBA_S3TC_DXT1_EXT 0x83F1
+#endif
+#ifndef GL_COMPRESSED_RGBA_S3TC_DXT3_EXT
+#define GL_COMPRESSED_RGBA_S3TC_DXT3_EXT 0x83F2
+#endif
+#ifndef GL_COMPRESSED_RGBA_S3TC_DXT5_EXT
+#define GL_COMPRESSED_RGBA_S3TC_DXT5_EXT 0x83F3
+#endif
+#ifndef GL_COMPRESSED_RGBA_BPTC_UNORM_ARB
+#define GL_COMPRESSED_RGBA_BPTC_UNORM_ARB 0x8E8C
+#endif
+#ifndef GL_COMPRESSED_RGBA_ASTC_4x4_KHR
+#define GL_COMPRESSED_RGBA_ASTC_4x4_KHR 0x93B0
+#define GL_COMPRESSED_RGBA_ASTC_5x4_KHR 0x93B1
+#define GL_COMPRESSED_RGBA_ASTC_5x5_KHR 0x93B2
+#define GL_COMPRESSED_RGBA_ASTC_6x5_KHR 0x93B3
+#define GL_COMPRESSED_RGBA_ASTC_6x6_KHR 0x93B4
+#define GL_COMPRESSED_RGBA_ASTC_8x5_KHR 0x93B5
+#define GL_COMPRESSED_RGBA_ASTC_8x6_KHR 0x93B6
+#define GL_COMPRESSED_RGBA_ASTC_8x8_KHR 0x93B7
+#define GL_COMPRESSED_RGBA_ASTC_10x5_KHR 0x93B8
+#define GL_COMPRESSED_RGBA_ASTC_10x6_KHR 0x93B9
+#define GL_COMPRESSED_RGBA_ASTC_10x8_KHR 0x93BA
+#define GL_COMPRESSED_RGBA_ASTC_10x10_KHR 0x93BB
+#define GL_COMPRESSED_RGBA_ASTC_12x10_KHR 0x93BC
+#define GL_COMPRESSED_RGBA_ASTC_12x12_KHR 0x93BD
+#endif
+
 /* OpenGL does not support "locking", i.e. direct access to a memory
  * buffer with pixel data. Instead, the data can be copied from/to
  * client memory. Because OpenGL stores pixel data starting with the
@@ -119,9 +154,24 @@ int _al_ogl_get_glformat(int format, int component)
       {GL_RGBA, GL_UNSIGNED_BYTE, GL_RGBA}, /* ABGR_8888_LE */
       {GL_RGBA4, GL_UNSIGNED_SHORT_4_4_4_4, GL_RGBA}, /* RGBA_4444 */
       {GL_LUMINANCE, GL_UNSIGNED_BYTE, GL_LUMINANCE}, /* SINGLE_CHANNEL_8 */
-      {GL_COMPRESSED_RGBA_S3TC_DXT1_EXT, GL_UNSIGNED_INT_8_8_8_8, GL_RGBA}, /* RGBA_DXT1 */
-      {GL_COMPRESSED_RGBA_S3TC_DXT3_EXT, GL_UNSIGNED_INT_8_8_8_8, GL_RGBA}, /* RGBA_DXT3 */
-      {GL_COMPRESSED_RGBA_S3TC_DXT5_EXT, GL_UNSIGNED_INT_8_8_8_8, GL_RGBA}, /* RGBA_DXT5 */
+      {GL_COMPRESSED_RGBA_S3TC_DXT1_EXT, 0, 0}, /* RGBA_DXT1 */
+      {GL_COMPRESSED_RGBA_S3TC_DXT3_EXT, 0, 0}, /* RGBA_DXT3 */
+      {GL_COMPRESSED_RGBA_S3TC_DXT5_EXT, 0, 0}, /* RGBA_DXT5 */
+      {GL_COMPRESSED_RGBA_BPTC_UNORM_ARB, 0, 0}, /* RGBA_BC7 */
+      {GL_COMPRESSED_RGBA_ASTC_4x4_KHR, 0, 0}, /* RGBA_ASTC_4x4 */
+      {GL_COMPRESSED_RGBA_ASTC_5x4_KHR, 0, 0}, /* RGBA_ASTC_5x4 */
+      {GL_COMPRESSED_RGBA_ASTC_5x5_KHR, 0, 0}, /* RGBA_ASTC_5x5 */
+      {GL_COMPRESSED_RGBA_ASTC_6x5_KHR, 0, 0}, /* RGBA_ASTC_6x5 */
+      {GL_COMPRESSED_RGBA_ASTC_6x6_KHR, 0, 0}, /* RGBA_ASTC_6x6 */
+      {GL_COMPRESSED_RGBA_ASTC_8x5_KHR, 0, 0}, /* RGBA_ASTC_8x5 */
+      {GL_COMPRESSED_RGBA_ASTC_8x6_KHR, 0, 0}, /* RGBA_ASTC_8x6 */
+      {GL_COMPRESSED_RGBA_ASTC_8x8_KHR, 0, 0}, /* RGBA_ASTC_8x8 */
+      {GL_COMPRESSED_RGBA_ASTC_10x5_KHR, 0, 0}, /* RGBA_ASTC_10x5 */
+      {GL_COMPRESSED_RGBA_ASTC_10x6_KHR, 0, 0}, /* RGBA_ASTC_10x6 */
+      {GL_COMPRESSED_RGBA_ASTC_10x8_KHR, 0, 0}, /* RGBA_ASTC_10x8 */
+      {GL_COMPRESSED_RGBA_ASTC_10x10_KHR, 0, 0}, /* RGBA_ASTC_10x10 */
+      {GL_COMPRESSED_RGBA_ASTC_12x10_KHR, 0, 0}, /* RGBA_ASTC_12x10 */
+      {GL_COMPRESSED_RGBA_ASTC_12x12_KHR, 0, 0}, /* RGBA_ASTC_12x12 */
    };
 
    if (al_get_opengl_version() >= _ALLEGRO_OPENGL_VERSION_3_0) {
@@ -161,9 +211,24 @@ int _al_ogl_get_glformat(int format, int component)
       {GL_RGBA, GL_UNSIGNED_BYTE, GL_RGBA}, /* ABGR_8888_LE */
       {GL_RGBA, GL_UNSIGNED_SHORT_4_4_4_4, GL_RGBA}, /* RGBA_4444 */
       {GL_LUMINANCE, GL_UNSIGNED_BYTE, GL_LUMINANCE}, /* SINGLE_CHANNEL_8 */
-      {0, 0, 0},
-      {0, 0, 0},
-      {0, 0, 0},
+      {GL_COMPRESSED_RGBA_S3TC_DXT1_EXT, 0, 0}, /* RGBA_DXT1 */
+      {GL_COMPRESSED_RGBA_S3TC_DXT3_EXT, 0, 0}, /* RGBA_DXT3 */
+      {GL_COMPRESSED_RGBA_S3TC_DXT5_EXT, 0, 0}, /* RGBA_DXT5 */
+      {GL_COMPRESSED_RGBA_BPTC_UNORM_ARB, 0, 0}, /* RGBA_BC7 */
+      {GL_COMPRESSED_RGBA_ASTC_4x4_KHR, 0, 0}, /* RGBA_ASTC_4x4 */
+      {GL_COMPRESSED_RGBA_ASTC_5x4_KHR, 0, 0}, /* RGBA_ASTC_5x4 */
+      {GL_COMPRESSED_RGBA_ASTC_5x5_KHR, 0, 0}, /* RGBA_ASTC_5x5 */
+      {GL_COMPRESSED_RGBA_ASTC_6x5_KHR, 0, 0}, /* RGBA_ASTC_6x5 */
+      {GL_COMPRESSED_RGBA_ASTC_6x6_KHR, 0, 0}, /* RGBA_ASTC_6x6 */
+      {GL_COMPRESSED_RGBA_ASTC_8x5_KHR, 0, 0}, /* RGBA_ASTC_8x5 */
+      {GL_COMPRESSED_RGBA_ASTC_8x6_KHR, 0, 0}, /* RGBA_ASTC_8x6 */
+      {GL_COMPRESSED_RGBA_ASTC_8x8_KHR, 0, 0}, /* RGBA_ASTC_8x8 */
+      {GL_COMPRESSED_RGBA_ASTC_10x5_KHR, 0, 0}, /* RGBA_ASTC_10x5 */
+      {GL_COMPRESSED_RGBA_ASTC_10x6_KHR, 0, 0}, /* RGBA_ASTC_10x6 */
+      {GL_COMPRESSED_RGBA_ASTC_10x8_KHR, 0, 0}, /* RGBA_ASTC_10x8 */
+      {GL_COMPRESSED_RGBA_ASTC_10x10_KHR, 0, 0}, /* RGBA_ASTC_10x10 */
+      {GL_COMPRESSED_RGBA_ASTC_12x10_KHR, 0, 0}, /* RGBA_ASTC_12x10 */
+      {GL_COMPRESSED_RGBA_ASTC_12x12_KHR, 0, 0}, /* RGBA_ASTC_12x12 */
    };
    #endif
 
@@ -407,6 +472,52 @@ static GLint ogl_bitmap_wrap(ALLEGRO_BITMAP_WRAP wrap)
 
 
 
+static bool ogl_compressed_format_supported(int format)
+{
+   ALLEGRO_OGL_EXT_LIST *ext = al_get_opengl_extension_list();
+   uint32_t version = al_get_opengl_version();
+
+   switch (format) {
+      case ALLEGRO_PIXEL_FORMAT_COMPRESSED_RGBA_DXT1:
+      case ALLEGRO_PIXEL_FORMAT_COMPRESSED_RGBA_DXT3:
+      case ALLEGRO_PIXEL_FORMAT_COMPRESSED_RGBA_DXT5:
+         return ext && ext->ALLEGRO_GL_EXT_texture_compression_s3tc;
+      case ALLEGRO_PIXEL_FORMAT_COMPRESSED_RGBA_BC7:
+         return (ext && ext->ALLEGRO_GL_ARB_texture_compression_bptc) ||
+            (ext && ext->ALLEGRO_GL_EXT_texture_compression_bptc) ||
+            version >= 0x04020000;
+      case ALLEGRO_PIXEL_FORMAT_COMPRESSED_RGBA_ASTC_4x4:
+      case ALLEGRO_PIXEL_FORMAT_COMPRESSED_RGBA_ASTC_5x4:
+      case ALLEGRO_PIXEL_FORMAT_COMPRESSED_RGBA_ASTC_5x5:
+      case ALLEGRO_PIXEL_FORMAT_COMPRESSED_RGBA_ASTC_6x5:
+      case ALLEGRO_PIXEL_FORMAT_COMPRESSED_RGBA_ASTC_6x6:
+      case ALLEGRO_PIXEL_FORMAT_COMPRESSED_RGBA_ASTC_8x5:
+      case ALLEGRO_PIXEL_FORMAT_COMPRESSED_RGBA_ASTC_8x6:
+      case ALLEGRO_PIXEL_FORMAT_COMPRESSED_RGBA_ASTC_8x8:
+      case ALLEGRO_PIXEL_FORMAT_COMPRESSED_RGBA_ASTC_10x5:
+      case ALLEGRO_PIXEL_FORMAT_COMPRESSED_RGBA_ASTC_10x6:
+      case ALLEGRO_PIXEL_FORMAT_COMPRESSED_RGBA_ASTC_10x8:
+      case ALLEGRO_PIXEL_FORMAT_COMPRESSED_RGBA_ASTC_10x10:
+      case ALLEGRO_PIXEL_FORMAT_COMPRESSED_RGBA_ASTC_12x10:
+      case ALLEGRO_PIXEL_FORMAT_COMPRESSED_RGBA_ASTC_12x12:
+         return (ext && (ext->ALLEGRO_GL_KHR_texture_compression_astc_ldr ||
+            ext->ALLEGRO_GL_OES_texture_compression_astc)) ||
+            (IS_OPENGLES && version >= 0x03020000);
+      default:
+         return true;
+   }
+}
+
+
+static size_t ogl_compressed_level_size(int format, int w, int h)
+{
+   int bw = al_get_pixel_block_width(format);
+   int bh = al_get_pixel_block_height(format);
+   int bs = al_get_pixel_block_size(format);
+   return (size_t)((w + bw - 1) / bw) * (size_t)((h + bh - 1) / bh) * bs;
+}
+
+
 // FIXME: need to do all the logic AllegroGL does, checking extensions,
 // proxy textures, formats, limits ...
 static bool ogl_upload_bitmap(ALLEGRO_BITMAP *bitmap)
@@ -472,7 +583,8 @@ static bool ogl_upload_bitmap(ALLEGRO_BITMAP *bitmap)
    }
 #endif
 
-   if (bitmap_flags & ALLEGRO_MIPMAP) {
+   if ((bitmap_flags & ALLEGRO_MIPMAP) &&
+         !_al_pixel_format_is_compressed(bitmap_format)) {
       /* If using FBOs, use glGenerateMipmapEXT instead of the GL_GENERATE_MIPMAP
        * texture parameter.  GL_GENERATE_MIPMAP is deprecated in GL 3.0 so we
        * may want to use the new method in other cases as well.
@@ -500,7 +612,20 @@ static bool ogl_upload_bitmap(ALLEGRO_BITMAP *bitmap)
     * NaN values in the texture cause some blending modes to fail on
     * those pixels
     */
-   if (!IS_OPENGLES) {
+   if (_al_pixel_format_is_compressed(bitmap_format)) {
+      unsigned char *buf;
+      size_t data_size = ogl_compressed_level_size(bitmap_format,
+         ogl_bitmap->true_w, ogl_bitmap->true_h);
+      buf = al_calloc(1, data_size);
+      glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+      glCompressedTexImage2D(GL_TEXTURE_2D, 0,
+         get_glformat(bitmap_format, 0),
+         ogl_bitmap->true_w, ogl_bitmap->true_h, 0,
+         (GLsizei)data_size, buf);
+      e = glGetError();
+      al_free(buf);
+   }
+   else if (!IS_OPENGLES) {
       if (ogl_bitmap->true_w != bitmap->w ||
             ogl_bitmap->true_h != bitmap->h ||
             bitmap_format == ALLEGRO_PIXEL_FORMAT_ABGR_F32) {
@@ -536,7 +661,7 @@ static bool ogl_upload_bitmap(ALLEGRO_BITMAP *bitmap)
    }
 
    if (e) {
-      ALLEGRO_ERROR("glTexImage2D for format %s, size %dx%d failed (%s)\n",
+      ALLEGRO_ERROR("Texture upload for format %s, size %dx%d failed (%s)\n",
          _al_pixel_format_name(bitmap_format),
          ogl_bitmap->true_w, ogl_bitmap->true_h,
          _al_gl_error_string(e));
@@ -559,6 +684,130 @@ static bool ogl_upload_bitmap(ALLEGRO_BITMAP *bitmap)
    ogl_bitmap->left = 0;
    ogl_bitmap->right = (float) w / ogl_bitmap->true_w;
    ogl_bitmap->top = (float) h / ogl_bitmap->true_h;
+   ogl_bitmap->bottom = 0;
+
+   return true;
+}
+
+
+static bool ogl_upload_compressed_bitmap(ALLEGRO_BITMAP *bitmap, int levels,
+   const void *data, const size_t *level_sizes)
+{
+   ALLEGRO_BITMAP_EXTRA_OPENGL *ogl_bitmap = bitmap->extra;
+   ALLEGRO_DISPLAY *disp = _al_get_bitmap_display(bitmap);
+   int bitmap_format = al_get_bitmap_format(bitmap);
+   int bitmap_flags = al_get_bitmap_flags(bitmap);
+   const uint8_t *level_data = data;
+   GLint previous_alignment = 1;
+   GLenum e = GL_NO_ERROR;
+   int gl_filters[] = {
+      GL_NEAREST, GL_LINEAR,
+      GL_NEAREST_MIPMAP_LINEAR, GL_LINEAR_MIPMAP_LINEAR
+   };
+   int filter;
+   int i;
+
+   if (!disp || levels < 1 || levels > 32 ||
+         !ogl_compressed_format_supported(bitmap_format)) {
+      return false;
+   }
+
+   if (ogl_bitmap->texture) {
+      if (disp->cache_texture == ogl_bitmap->texture)
+         disp->cache_texture = 0;
+      glDeleteTextures(1, &ogl_bitmap->texture);
+      ogl_bitmap->texture = 0;
+   }
+
+   glGenTextures(1, &ogl_bitmap->texture);
+   glBindTexture(GL_TEXTURE_2D, ogl_bitmap->texture);
+
+   ALLEGRO_BITMAP_WRAP wrap_u, wrap_v;
+   _al_get_bitmap_wrap(bitmap, &wrap_u, &wrap_v);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, ogl_bitmap_wrap(wrap_u));
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, ogl_bitmap_wrap(wrap_v));
+
+   filter = (bitmap_flags & ALLEGRO_MIPMAP) ? 2 : 0;
+   if (bitmap_flags & ALLEGRO_MIN_LINEAR)
+      filter++;
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, gl_filters[filter]);
+
+   filter = (bitmap_flags & ALLEGRO_MAG_LINEAR) ? 1 : 0;
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, gl_filters[filter]);
+
+   glGetIntegerv(GL_UNPACK_ALIGNMENT, &previous_alignment);
+   glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+
+   for (i = 0; i < levels; i++) {
+      int level_w = bitmap->w >> i;
+      int level_h = bitmap->h >> i;
+      size_t expected;
+
+      if (level_w < 1)
+         level_w = 1;
+      if (level_h < 1)
+         level_h = 1;
+      expected = ogl_compressed_level_size(bitmap_format, level_w, level_h);
+
+      if (level_sizes[i] != expected) {
+         ALLEGRO_ERROR("Invalid compressed mipmap level %d size: got %d, "
+            "expected %d.\n", i, (int)level_sizes[i], (int)expected);
+         e = GL_INVALID_VALUE;
+         break;
+      }
+
+      glCompressedTexImage2D(GL_TEXTURE_2D, i,
+         get_glformat(bitmap_format, 0), level_w, level_h, 0,
+         (GLsizei)level_sizes[i], level_data);
+      e = glGetError();
+      if (e)
+         break;
+      level_data += level_sizes[i];
+   }
+
+   if (levels > 1 && (!IS_OPENGLES ||
+         al_get_opengl_version() >= _ALLEGRO_OPENGL_VERSION_3_0)) {
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, levels - 1);
+   }
+
+   if (!e && levels == 1 && (bitmap_flags & ALLEGRO_MIPMAP)) {
+      if (al_get_opengl_extension_list()->ALLEGRO_GL_EXT_framebuffer_object ||
+          al_get_opengl_extension_list()->ALLEGRO_GL_OES_framebuffer_object ||
+          IS_OPENGLES) {
+#if defined ALLEGRO_CFG_OPENGLES1
+         glGenerateMipmapEXT(GL_TEXTURE_2D);
+#else
+         if (al_get_opengl_version() >= _ALLEGRO_OPENGL_VERSION_3_0)
+            glGenerateMipmap(GL_TEXTURE_2D);
+         else
+            glGenerateMipmapEXT(GL_TEXTURE_2D);
+#endif
+         e = glGetError();
+         if (e) {
+            ALLEGRO_ERROR("glGenerateMipmapEXT for texture %d failed (%s).\n",
+               ogl_bitmap->texture, _al_gl_error_string(e));
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, 0);
+            e = GL_NO_ERROR;
+         }
+      }
+   }
+
+   if (previous_alignment != 1)
+      glPixelStorei(GL_UNPACK_ALIGNMENT, previous_alignment);
+
+   if (e) {
+      ALLEGRO_ERROR("glCompressedTexImage2D failed for format %s (%s).\n",
+         _al_pixel_format_name(bitmap_format), _al_gl_error_string(e));
+      glDeleteTextures(1, &ogl_bitmap->texture);
+      ogl_bitmap->texture = 0;
+      return false;
+   }
+
+   ogl_bitmap->true_w = bitmap->w;
+   ogl_bitmap->true_h = bitmap->h;
+   ogl_bitmap->left = 0;
+   ogl_bitmap->right = 1;
+   ogl_bitmap->top = 1;
    ogl_bitmap->bottom = 0;
 
    return true;
@@ -636,6 +885,21 @@ static bool can_flip_blocks(ALLEGRO_PIXEL_FORMAT format)
       case ALLEGRO_PIXEL_FORMAT_COMPRESSED_RGBA_DXT1:
       case ALLEGRO_PIXEL_FORMAT_COMPRESSED_RGBA_DXT3:
       case ALLEGRO_PIXEL_FORMAT_COMPRESSED_RGBA_DXT5:
+      case ALLEGRO_PIXEL_FORMAT_COMPRESSED_RGBA_BC7:
+      case ALLEGRO_PIXEL_FORMAT_COMPRESSED_RGBA_ASTC_4x4:
+      case ALLEGRO_PIXEL_FORMAT_COMPRESSED_RGBA_ASTC_5x4:
+      case ALLEGRO_PIXEL_FORMAT_COMPRESSED_RGBA_ASTC_5x5:
+      case ALLEGRO_PIXEL_FORMAT_COMPRESSED_RGBA_ASTC_6x5:
+      case ALLEGRO_PIXEL_FORMAT_COMPRESSED_RGBA_ASTC_6x6:
+      case ALLEGRO_PIXEL_FORMAT_COMPRESSED_RGBA_ASTC_8x5:
+      case ALLEGRO_PIXEL_FORMAT_COMPRESSED_RGBA_ASTC_8x6:
+      case ALLEGRO_PIXEL_FORMAT_COMPRESSED_RGBA_ASTC_8x8:
+      case ALLEGRO_PIXEL_FORMAT_COMPRESSED_RGBA_ASTC_10x5:
+      case ALLEGRO_PIXEL_FORMAT_COMPRESSED_RGBA_ASTC_10x6:
+      case ALLEGRO_PIXEL_FORMAT_COMPRESSED_RGBA_ASTC_10x8:
+      case ALLEGRO_PIXEL_FORMAT_COMPRESSED_RGBA_ASTC_10x10:
+      case ALLEGRO_PIXEL_FORMAT_COMPRESSED_RGBA_ASTC_12x10:
+      case ALLEGRO_PIXEL_FORMAT_COMPRESSED_RGBA_ASTC_12x12:
          return true;
       default:
          return false;
@@ -758,11 +1022,11 @@ static ALLEGRO_LOCKED_REGION *ogl_lock_compressed_region(ALLEGRO_BITMAP *bitmap,
    int block_height = al_get_pixel_block_height(bitmap_format);
    int block_size = al_get_pixel_block_size(bitmap_format);
    int xc = x / block_width;
-   int yc = y / block_width;
+   int yc = y / block_height;
    int wc = w / block_width;
-   int hc = h / block_width;
-   int true_wc = ogl_bitmap->true_w / block_width;
-   int true_hc = ogl_bitmap->true_h / block_height;
+   int hc = h / block_height;
+   int true_wc = (ogl_bitmap->true_w + block_width - 1) / block_width;
+   int true_hc = (ogl_bitmap->true_h + block_height - 1) / block_height;
    int gl_yc = _al_get_least_multiple(bitmap->h, block_height) / block_height - yc - hc;
 
    if (!can_flip_blocks(bitmap_format)) {
@@ -899,9 +1163,18 @@ static void ogl_unlock_compressed_region(ALLEGRO_BITMAP *bitmap)
    int block_size = al_get_pixel_block_size(lock_format);
    int block_width = al_get_pixel_block_width(lock_format);
    int block_height = al_get_pixel_block_height(lock_format);
-   int data_size = bitmap->lock_h * bitmap->lock_w /
+   int upload_w = bitmap->lock_w;
+   int upload_h = bitmap->lock_h;
+   int data_size;
+   int gl_y;
+
+   if (bitmap->lock_x + upload_w > ogl_bitmap->true_w)
+      upload_w = ogl_bitmap->true_w - bitmap->lock_x;
+   if (bitmap->lock_y + upload_h > ogl_bitmap->true_h)
+      upload_h = ogl_bitmap->true_h - bitmap->lock_y;
+   data_size = upload_h * upload_w /
       (block_width * block_height) * block_size;
-   int gl_y = _al_get_least_multiple(bitmap->h, block_height) - bitmap->lock_y - bitmap->lock_h;
+   gl_y = ogl_bitmap->true_h - bitmap->lock_y - upload_h;
 
    /* It shouldn't be possible for this to fail, as we wouldn't have been able
     * to lock earlier */
@@ -940,7 +1213,7 @@ static void ogl_unlock_compressed_region(ALLEGRO_BITMAP *bitmap)
    glBindTexture(GL_TEXTURE_2D, ogl_bitmap->texture);
    glCompressedTexSubImage2D(GL_TEXTURE_2D, 0,
       bitmap->lock_x, gl_y,
-      bitmap->lock_w, bitmap->lock_h,
+      upload_w, upload_h,
       get_glformat(lock_format, 0),
       data_size,
       ogl_bitmap->lock_buffer);
@@ -1029,6 +1302,7 @@ static ALLEGRO_BITMAP_INTERFACE *ogl_bitmap_driver(void)
    glbmp_vt.lock_compressed_region = ogl_lock_compressed_region;
    glbmp_vt.unlock_compressed_region = ogl_unlock_compressed_region;
    glbmp_vt.backup_dirty_bitmap = ogl_backup_dirty_bitmap;
+   glbmp_vt.upload_compressed_bitmap = ogl_upload_compressed_bitmap;
 
    return &glbmp_vt;
 }
@@ -1051,13 +1325,14 @@ ALLEGRO_BITMAP *_al_ogl_create_bitmap(ALLEGRO_DISPLAY *d, int w, int h,
    ASSERT(_al_pixel_format_is_real(format));
 
    block_width = al_get_pixel_block_width(format);
-   block_height = al_get_pixel_block_width(format);
+   block_height = al_get_pixel_block_height(format);
    true_w = _al_get_least_multiple(w, block_width);
    true_h = _al_get_least_multiple(h, block_height);
 
    if (_al_pixel_format_is_compressed(format)) {
-      if (!al_get_opengl_extension_list()->ALLEGRO_GL_EXT_texture_compression_s3tc) {
-         ALLEGRO_DEBUG("Device does not support S3TC compressed textures.\n");
+      if (!ogl_compressed_format_supported(format)) {
+         ALLEGRO_DEBUG("Device does not support compressed texture format %s.\n",
+            _al_pixel_format_name(format));
          return NULL;
       }
    }

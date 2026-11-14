@@ -2,6 +2,26 @@
 
 These lists serve as summaries; the full histories are in the git repository.
 
+Unreleased
+==========
+
+Core:
+
+- Add BC7 and ASTC compressed pixel formats.
+- Upload compressed mipmap chains directly to OpenGL without CPU
+  decompression.
+
+Image addon:
+
+- Add KTX 1 and KTX 2 loading.
+- Add BC1, BC3, BC7 and ASTC support to DDS and KTX loading, including DDS
+  DX10 headers and complete mipmap chains.
+
+Examples:
+
+- Add `ex_compressed_texture`.
+
+
 Changes from 5.2.11.2 to 5.2.11.3 (February 2026)
 =================================================
 

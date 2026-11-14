@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		96C0A0011F00000000000001 /* compressed.c in Sources */ = {isa = PBXBuildFile; fileRef = 96C0A0031F00000000000001 /* compressed.c */; };
+		96C0A0021F00000000000001 /* ktx.c in Sources */ = {isa = PBXBuildFile; fileRef = 96C0A0041F00000000000001 /* ktx.c */; };
 		968608761B6B12960008BD29 /* dds.c in Sources */ = {isa = PBXBuildFile; fileRef = 968608751B6B12960008BD29 /* dds.c */; };
 		96A12D031D2F3C3E00F245D9 /* png.c in Sources */ = {isa = PBXBuildFile; fileRef = 96A12D021D2F3C3E00F245D9 /* png.c */; };
 		96A12D051D2F3F9300F245D9 /* identify.c in Sources */ = {isa = PBXBuildFile; fileRef = 96A12D041D2F3F9300F245D9 /* identify.c */; };
@@ -128,6 +130,8 @@
 
 /* Begin PBXFileReference section */
 		964130EF1A6353E700184496 /* libAllegro5_iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libAllegro5_iOS.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		96C0A0031F00000000000001 /* compressed.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = compressed.c; path = ../../addons/image/compressed.c; sourceTree = "<group>"; };
+		96C0A0041F00000000000001 /* ktx.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ktx.c; path = ../../addons/image/ktx.c; sourceTree = "<group>"; };
 		968608751B6B12960008BD29 /* dds.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = dds.c; path = ../../addons/image/dds.c; sourceTree = "<group>"; };
 		96A12D021D2F3C3E00F245D9 /* png.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = png.c; path = ../../addons/image/png.c; sourceTree = "<group>"; };
 		96A12D041D2F3F9300F245D9 /* identify.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = identify.c; path = ../../addons/image/identify.c; sourceTree = "<group>"; };
@@ -292,6 +296,8 @@
 				96CE355D1B6B068800705360 /* pcx.c */,
 				96CE355E1B6B068800705360 /* tga.c */,
 				968608751B6B12960008BD29 /* dds.c */,
+				96C0A0031F00000000000001 /* compressed.c */,
+				96C0A0041F00000000000001 /* ktx.c */,
 				96CE35521B6B066100705360 /* font.c */,
 				96CE35531B6B066100705360 /* fontbmp.c */,
 				96CE35541B6B066100705360 /* stdfont.c */,
@@ -498,6 +504,8 @@
 				96CE35571B6B066100705360 /* fontbmp.c in Sources */,
 				96CE350B1B6B059C00705360 /* memory.c in Sources */,
 				96CE35111B6B059C00705360 /* shader.c in Sources */,
+				96C0A0011F00000000000001 /* compressed.c in Sources */,
+				96C0A0021F00000000000001 /* ktx.c in Sources */,
 				968608761B6B12960008BD29 /* dds.c in Sources */,
 				96CE35601B6B068800705360 /* iio.c in Sources */,
 				96CE35301B6B05F900705360 /* ogl_shader.c in Sources */,

@@ -42,6 +42,13 @@ bool al_init_image_addon(void)
    success |= al_register_bitmap_loader_f(".dds", _al_load_dds_f);
    success |= al_register_bitmap_identifier(".dds", _al_identify_dds);
 
+   success |= al_register_bitmap_loader(".ktx", _al_load_ktx);
+   success |= al_register_bitmap_loader_f(".ktx", _al_load_ktx_f);
+   success |= al_register_bitmap_identifier(".ktx", _al_identify_ktx);
+   success |= al_register_bitmap_loader(".ktx2", _al_load_ktx);
+   success |= al_register_bitmap_loader_f(".ktx2", _al_load_ktx_f);
+   success |= al_register_bitmap_identifier(".ktx2", _al_identify_ktx);
+
    /* Even if we don't have libpng or libjpeg we most likely have a
     * native reader for those instead so always identify them.
     */

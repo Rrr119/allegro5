@@ -62,6 +62,17 @@ set(DATA_IMAGES
     mysha.pcx
     mysha256x256.png
     obp.jpg
+    test_astc_4x4.dds
+    test_astc_4x4.ktx
+    test_astc_6x6.ktx
+    test_astc_6x6.ktx2
+    test_bc1.dds
+    test_bc1.ktx
+    test_bc3.dds
+    test_bc3.ktx
+    test_bc7.dds
+    test_bc7.ktx
+    test_bc7.ktx2
     texture.tga
     texture2.tga
     )
@@ -138,6 +149,7 @@ example(ex_color ex_color.cpp ${NIHGUI} ${TTF} ${COLOR} DATA ${DATA_TTF})
 example(ex_color2 ex_color2.c ${FONT} ${COLOR} ${PRIM})
 example(ex_color_gradient ex_color_gradient.c ${TTF} ${COLOR} ${PRIM} DATA ${DATA_TTF})
 example(ex_compressed ${IMAGE} ${FONT} ${DATA_IMAGES})
+example(ex_compressed_texture ${IMAGE} ${FONT} ${DATA_IMAGES})
 example(ex_convert CONSOLE ${IMAGE})
 example(ex_cpu ${FONT})
 example(ex_depth_mask ${IMAGE} ${TTF} ${DATA_IMAGES} ${DATA_TTF})

@@ -41,6 +41,10 @@ ALLEGRO_IIO_FUNC(ALLEGRO_BITMAP *, _al_load_dds, (const char *filename, int flag
 ALLEGRO_IIO_FUNC(ALLEGRO_BITMAP *, _al_load_dds_f, (ALLEGRO_FILE *f, int flags));
 ALLEGRO_IIO_FUNC(bool, _al_identify_dds, (ALLEGRO_FILE *f));
 
+ALLEGRO_IIO_FUNC(ALLEGRO_BITMAP *, _al_load_ktx, (const char *filename, int flags));
+ALLEGRO_IIO_FUNC(ALLEGRO_BITMAP *, _al_load_ktx_f, (ALLEGRO_FILE *f, int flags));
+ALLEGRO_IIO_FUNC(bool, _al_identify_ktx, (ALLEGRO_FILE *f));
+
 ALLEGRO_IIO_FUNC(bool, _al_identify_png, (ALLEGRO_FILE *f));
 ALLEGRO_IIO_FUNC(bool, _al_identify_jpg, (ALLEGRO_FILE *f));
 ALLEGRO_IIO_FUNC(bool, _al_identify_webp, (ALLEGRO_FILE *f));
